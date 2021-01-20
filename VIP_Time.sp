@@ -4,25 +4,25 @@ public Plugin myinfo = {
 	name = "[VIP] Time",
 	author = "Mozze",
 	description = "",
-	version = "1.0",
+	version = "1.1",
 	url = "t.me/pMozze"
 }
 
-public void OnClientPutInServer(int iClient) {
-	if (VIP_IsClientVIP(iClient))
+public void VIP_OnClientLoaded(int iClient, bool bIsVIP) {
+	if (bIsVIP)
 		return;
 
-	char szCurrentHour[4];
+	char szHour[3];
 	int iCurrentHour;
 
-	FormatTime(szCurrentHour, sizeof(szCurrentHour), "%H");
-	iCurrentHour = StringToInt(szCurrentHour);
+	FormatTime(szHour, sizeof(szHour), "%H");
+	iCurrentHour = StringToInt(szHour);
 
-	for (int Index = 21; Index <= 23; Index++)
-		if (iCurrentHour == Index)
+	for (int iHourIndex = 0; iHourIndex <= 9; iHourIndex++)
+		if (iCurrentHour == iHourIndex)
 			VIP_GiveClientVIP(0, iClient, 0, "TEMPORARY", false);
-	
-	for (int Index = 0; Index <= 9; Index++)
-		if (iCurrentHour == Index)
+
+	for (int iHourIndex = 21; iHourIndex <= 23; iHourIndex++)
+		if (iCurrentHour == iHourIndex)
 			VIP_GiveClientVIP(0, iClient, 0, "TEMPORARY", false);
 }
